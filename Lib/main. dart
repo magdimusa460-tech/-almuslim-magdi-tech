@@ -1,0 +1,221 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const AlMuslimApp());
+}
+
+class AlMuslimApp extends StatelessWidget {
+  const AlMuslimApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'تطبيق المسلم',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+        useMaterial3: true,
+      ),
+      home: const HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  final List<Map<String, dynamic>> sections = const [
+    {
+      'title': 'أركان الصلاة',
+      'icon': Icons.account_balance,
+      'color': Colors.teal,
+      'items': [
+        {'title': 'تكبيرة الإحرام', 'type': 'ركن', 'desc': 'قول "الله أكبر" في بداية الصلاة ولا تنعقد إلا بها.'},
+        {'title': 'قراءة الفاتحة', 'type': 'ركن', 'desc': 'قراءتها واجبة في كل ركعة للإمام والمنفرد.'},
+        {'title': 'الركوع والاطمئنان', 'type': 'ركن', 'desc': 'الانحناء بحيث تمس اليدان الركبتين مع السكون.'},
+        {'title': 'السجود على الأعضاء السبعة', 'type': 'ركن', 'desc': 'الجبهة مع الأنف، الكفان، الركبتان، وأطراف القدمين.'},
+      ]
+    },
+    {
+      'title': 'واجبات وسنن الصلاة',
+      'icon': Icons.menu_book,
+      'color': Colors.blue,
+      'items': [
+        {'title': 'تكبيرات الانتقال', 'type': 'واجب', 'desc': 'التكبير عند الخفض والرفع وتُجبر بسجود السهو إن نُسيت.'},
+        {'title': 'دعاء الاستفتاح', 'type': 'سنة', 'desc': 'يُقال بعد تكبيرة الإحرام وقبل قراءة الفاتحة.'},
+        {'title': 'رفع اليدين مع التكبير', 'type': 'سنة', 'desc': 'حذو المنكبين عند الإحرام والركوع والرفع منه.'},
+      ]
+    },
+    {
+      'title': 'تحذير تارك الصلاة',
+      'icon': Icons.warning_amber,
+      'color': Colors.red,
+      'items': [
+        {
+          'title': 'خطورة ترك الصلاة',
+          'type': 'حديث صحيح',
+          'desc': '«العَهْدُ الَّذِي بَيْنَنَا وَبَيْنَهُمُ الصَّلاَةُ، فَمَنْ تَرَكَهَا فَقَدْ كَفَرَ» (رواه الترمذي).'
+        },
+        {
+          'title': 'أول ما يُحاسب عليه العبد',
+          'type': 'حديث صحيح',
+          'desc': '«إنَّ أَّوَّلَ مَا يُحَاسَبُ بِهِ العَبْدُ يَوْمَ القِيَامَةِ مِنْ عَمَلِهِ صَلاَتُهُ» (رواه الترمذي).'
+        },
+      ]
+    },
+    {
+      'title': 'أوقات الصلاة',
+      'icon': Icons.mosque,
+      'color': Colors.emerald,
+      'items': [
+        {'title': 'الفجر', 'type': 'توقيت', 'desc': 'من طلوع الفجر الثاني إلى شروق الشمس.'},
+        {'title': 'الظهر', 'type': 'توقيت', 'desc': 'من زوال الشمس إلى أن يصير ظل كل شيء مثله.'},
+        {'title': 'العصر', 'type': 'توقيت', 'desc': 'من مصير ظل الشيء مثله إلى اصفرار الشمس.'},
+        {'title': 'المغرب', 'type': 'توقيت', 'desc': 'من غروب الشمس إلى مغيب الشفق الأحمر.'},
+        {'title': 'العشاء', 'type': 'توقيت', 'desc': 'من مغيب الشفق الأحمر إلى نصف الليل.'},
+      ]
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('تطبيق المسلم'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            onPressed: () => _showDeveloperInfo(context),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+            color: Colors.teal.shade50,
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.verified, size: 18, color: Colors.teal),
+                SizedBox(width: 8),
+                Text(
+                  'تطوير وإعداد: مجدى تكنولوجي',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.teal,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                ),
+                itemCount: sections.length,
+                itemBuilder: (context, index) {
+                  final section = sections[index];
+                  return Card(
+                    color: (section['color'] as Color).withOpacity(0.1),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SectionDetailScreen(
+                              title: section['title'],
+                              items: List<Map<String, String>>.from(section['items']),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(section['icon'], size: 48, color: section['color']),
+                          const SizedBox(height: 10),
+                          Text(
+                            section['title'],
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: section['color'],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showDeveloperInfo(BuildContext context) {
+    showAboutDialog(
+      context: context,
+      applicationName: 'تطبيق المسلم',
+      applicationVersion: '1.0.0',
+      applicationIcon: const Icon(Icons.mosque, size: 40, color: Colors.teal),
+      children: const [
+        SizedBox(height: 10),
+        Text(
+          'تم تصميم وتطوير هذا التطبيق بواسطة: مجدى تكنولوجي\n'
+          'تطبيق شامل لأحكام الصلاة، السنن، الأركان، والأحاديث الصحيحة.',
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+}
+
+class SectionDetailScreen extends StatelessWidget {
+  final String title;
+  final List<Map<String, String>> items;
+
+  const SectionDetailScreen({super.key, required this.title, required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(12),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final item = items[index];
+          return Card(
+            margin: const EdgeInsets.symmetric(vertical: 6),
+            child: ListTile(
+              title: Text(item['title']!, style: const TextStyle(fontWeight: FontWeight.bold)),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 6.0),
+                style: const TextStyle(fontSize: 14),
+                child: Text(item['desc']!),
+              ),
+              trailing: Chip(
+                label: Text(item['type']!, style: const TextStyle(fontSize: 11)),
+                backgroundColor: Colors.teal.shade50,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
